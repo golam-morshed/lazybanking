@@ -1,3 +1,4 @@
+import MobileNav from "@/components/MobileNav";
 import Sidebar from "@/components/Sidebar";
 import Image from "next/image";
 
@@ -13,12 +14,15 @@ export default function RootLayout({
   return (
     <main className="flex h-screen w-full font-inter">
       <Sidebar user={loggedInUser} />
-      {/* <div className='flex size-full flex-col'>
+      <div className='flex size-full flex-col'>
         <div className="root-layout">
-          <Image src='/icons/logo.svg' alt='Lazy Banking' width={30} height={30} />
+          <Image src='/icons/logo.svg' alt='Lazy Banking' width={30} height={30} className="cursor-pointer" />
+          <div className="">
+            <MobileNav />
+          </div>
         </div>
-      </div> */}
-      {children}
+        {children}
+      </div>
     </main>
   );
 }
