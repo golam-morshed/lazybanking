@@ -25,12 +25,12 @@ const DoghnutChart = () => {
     <Doughnut 
     data={data}
     options={{
-        cutout: "60%",
+        cutout: "70%",
         plugins: {
             legend: {
                 display: false
             }
-        }
+        },
     }}
     />
   )
