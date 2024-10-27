@@ -11,10 +11,10 @@ import {
     FormMessage,
   } from "@/components/ui/form"
  
-  const formSchema = authFormSchema('sign-up');
+  type formSchema = ReturnType<typeof authFormSchema>;
   interface CustomInputProps {
-    control: Control<z.infer<typeof formSchema>>;
-    name: FieldPath<z.infer<typeof formSchema>>;
+    control: Control<z.infer<formSchema>>;
+    name: FieldPath<z.infer<formSchema>>;
     label: string;
     placeholder: string;
     type: string;
@@ -31,7 +31,7 @@ const CustomInput = ({control, name, label, placeholder='', type}: CustomInputPr
                 <FormLabel className="form-label">{label}</FormLabel>
                 <div className='flex w-full flex-col'>
                     <FormControl>
-                        <Input placeholder={placeholder} type={type} {...field} />
+                        <Input placeholder={placeholder} type={type} {...field} value={field.value instanceof Date ? field.value.toISOString() : field.value}/>
                     </FormControl>
                 </div>
                 <FormMessage className='form-message ml-1 text-red-500 absolute -bottom-5 left-0'/>
