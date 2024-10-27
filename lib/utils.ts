@@ -2,6 +2,7 @@
 import { type ClassValue, clsx } from "clsx";
 import qs from "query-string";
 import { twMerge } from "tailwind-merge";
+import { z } from "zod";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -193,3 +194,19 @@ export const getTransactionStatus = (date: Date) => {
 
   return date > twoDaysAgo ? "Processing" : "Success";
 };
+
+
+export const authFormSchema = (type: "sign-in" | "sign-up") => z.object({
+  // both sign in and sign up
+  email: z.string().email({message: "Invalid email address"}),
+  password: z.string().min(8, {message: "Password must be at least 8 characters long"})
+  .regex(/[A-Z]/, {message: "Password must contain at least one capital letter"})
+  .regex(/[!@#$%^&*(),.?":{}|<>]/, {message: "Password must contain at least one special character"}),
+  firstName: type === 'sign-in' ? z.string().optional() : z.string().min(1, {message: "First name is required"}),
+  lastName: type === 'sign-in' ? z.string().optional() : z.string().min(1, {message: "Last name is required"}),
+  address1: type === 'sign-in' ? z.string().optional() : z.string().min(1, {message: "Address is required"}),
+  state: type === 'sign-in' ? z.string().optional() : z.string().min(1, {message: "State is required"}),
+  postalCode: type === 'sign-in' ? z.string().optional() : z.string().min(1, {message: "Postal code is required"}),
+  dateOfBirth: type === 'sign-in' ? z.date().optional() : z.date({message: "Date of birth is required"}),
+  ssn: type === 'sign-in' ? z.string().optional() : z.string().min(1, {message: "SSN is required"}),
+});
