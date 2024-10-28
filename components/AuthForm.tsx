@@ -1,6 +1,7 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { z } from "zod"
@@ -13,31 +14,55 @@ import {
 import {authFormSchema} from '@/lib/utils'
 import CustomInput from './CustomInput';
 import { Loader2 } from 'lucide-react';
+import { signUp } from '@/lib/actions/user.action';
+import { signIn } from '@/lib/actions/user.action';
+import { useRouter } from 'next/navigation';
  
 
 const AuthForm = ({type}: {type: "sign-in" | "sign-up"}) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<SignUpParams | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const formSchema = authFormSchema(type);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       password: "",
-      email: ""
+      email: "",
     },
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsLoading(true);
     try {
+
+      if (type === 'sign-in') {
+        const response = await signIn({
+          email: values.email,
+          password: values.password
+        })
+
+        if(response) {
+          router.push('/');
+        }
+      }
+
+      if (type === 'sign-up') {
+          const newUserData = await signUp(values);
+          if (!newUserData) {
+            throw new Error('Failed to create user - no data returned');
+          }
+          setUser(newUserData as SignUpParams);
+      }
       
     } catch (error) {
+      console.error("Error submitting form", error)
       
-    } finally {
-      setIsLoading(false);
+    }
+    setIsLoading(false);
   }
-}
+
   return (
     <section className='auth-form'>
         <header className='flex flex-col gap-5 md:gap-8'>

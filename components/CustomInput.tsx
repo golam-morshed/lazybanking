@@ -31,7 +31,7 @@ const CustomInput = ({control, name, label, placeholder='', type}: CustomInputPr
                 <FormLabel className="form-label">{label}</FormLabel>
                 <div className='flex w-full flex-col'>
                     <FormControl>
-                        <Input placeholder={placeholder} type={type} {...field} value={field.value instanceof Date ? field.value.toISOString() : field.value}/>
+                        <Input placeholder={placeholder} type={type} {...field} />
                     </FormControl>
                 </div>
                 <FormMessage className='form-message ml-1 text-red-500 absolute -bottom-5 left-0'/>

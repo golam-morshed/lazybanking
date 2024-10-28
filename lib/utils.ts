@@ -207,6 +207,6 @@ export const authFormSchema = (type: "sign-in" | "sign-up") => z.object({
   city: type === 'sign-in' ? z.string().optional() : z.string().min(1, {message: "City is required"}),
   state: type === 'sign-in' ? z.string().optional() : z.string().min(1, {message: "State is required"}),
   postalCode: type === 'sign-in' ? z.string().optional() : z.string().min(1, {message: "Postal code is required"}),
-  dateOfBirth: type === 'sign-in' ? z.date().optional() : z.date({message: "Date of birth is required"}),
+  dateOfBirth: type === 'sign-in' ? z.string().date().optional() : z.string().date(),
   ssn: type === 'sign-in' ? z.string().optional() : z.string().min(1, {message: "SSN is required"}),
 });
