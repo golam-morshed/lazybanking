@@ -29,14 +29,15 @@ const AuthForm = ({type}: {type: "sign-in" | "sign-up"}) => {
   })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
     setIsLoading(true);
-    setTimeout(() => {
-      console.log(values)
+    try {
+      
+    } catch (error) {
+      
+    } finally {
       setIsLoading(false);
-    }, 1500)
   }
+}
   return (
     <section className='auth-form'>
         <header className='flex flex-col gap-5 md:gap-8'>
@@ -79,13 +80,14 @@ const AuthForm = ({type}: {type: "sign-in" | "sign-up"}) => {
                     <CustomInput control={form.control} name={"lastName"} label='Last Name' type='text' placeholder='Enter your last name' />
                   </div>
                   <CustomInput control={form.control} name={"address1"} label='Address' type='text' placeholder='Enter your address' />
+                  <CustomInput control={form.control} name={"city"} label='City' type='text' placeholder='Enter your city name' />
                   <div className="flex gap-4">
                     <CustomInput control={form.control} name={"state"} label='State' type='text' placeholder='Enter your state' />
-                    <CustomInput control={form.control} name={"postalCode"} label='Postal Code' type='text' placeholder='Enter your postal code' />
+                    <CustomInput control={form.control} name={"postalCode"} label='Postal Code' type='text' placeholder='Ex: 11101' />
                   </div>
                   <div className="flex gap-4">
                     <CustomInput control={form.control} name={"dateOfBirth"} label='Date of Birth' type='date' placeholder='Enter your date of birth' />
-                    <CustomInput control={form.control} name={"ssn"} label='SSN' type='text' placeholder='Enter your SSN' />
+                    <CustomInput control={form.control} name={"ssn"} label='SSN' type='text' placeholder='Ex: 1234' />
                   </div>
                 </>
               ) : null}

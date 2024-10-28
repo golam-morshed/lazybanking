@@ -10,7 +10,7 @@ const Sidebar = ({user}: SiderbarProps) => {
   return (
     <section className='sidebar'>
         <nav className='flex flex-col gap-4 xl:gap-2'>
-            <Link href='/' className='mb-12 xl:ml-6 cursor-pointer flex flex-col justify-center items-center'>
+            <Link href='/' className='mb-12 xl:ml-6 cursor-pointer flex flex-col justify-center items-center self-start'>
                 <Image src='/icons/logo.svg' alt='Lazy Banking' width={34} height={34} className='size-[30px] max-xl:size-14'/>
                 <h1 className='sidebar-logo'>Lazy Banking</h1>
             </Link>
