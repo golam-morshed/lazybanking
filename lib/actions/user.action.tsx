@@ -8,8 +8,14 @@ import { parseStringify } from "../utils";
 export const signIn = async ({email, password}: LoginUser) => {
     try {
         const { account } = await createAdminClient();
-        const response = await account.createEmailPasswordSession(email, password);
-        return parseStringify(response);
+        const session = await account.createEmailPasswordSession(email, password);
+        cookies().set("appwrite-session", session.secret, {
+            path: "/",
+            httpOnly: true,
+            sameSite: "strict",
+            secure: true,
+        });
+        return parseStringify(session);
     } catch (error) {
         console.error("Error signing in", error)
     }
@@ -36,11 +42,10 @@ export const signUp = async (userData: SignUpParams) => {
 
         return parseStringify(newUserAccount);
     } catch (error) {
-        console.error("Error signing in", error)
+        console.error("Error signing up", error)
     }
 }
 
-// ... your initilization functions
 
 export async function getLoggedInUser() {
     try {
@@ -49,5 +54,19 @@ export async function getLoggedInUser() {
     } catch (error) {
       return null;
     }
-  }
-  
+}
+
+export const logoutAccount = async () => {
+    try {
+        const { account } = await createSessionClient();
+        cookies().delete("appwrite-session");
+        const sessionDeleted = await account.deleteSession('current');
+        console.log("Session deleted", sessionDeleted)
+        if (sessionDeleted) {
+            return true;
+        }
+        return false;
+    } catch (error) {
+        console.error("Error logging out", error)
+    }
+}

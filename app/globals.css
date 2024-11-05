@@ -276,7 +276,7 @@
 
   /* Auth Form */
   .auth-form {
-    @apply flex min-h-screen w-full max-w-[420px] flex-col justify-center gap-5 py-10 md:gap-8 pl-5 md:pl-8;
+    @apply flex min-h-screen w-[90%] max-w-[550px] flex-col justify-center gap-5 py-10 md:gap-8 pl-5 md:pl-8;
   }
 
   .form-item {
@@ -356,7 +356,7 @@
   }
 
   .footer_image {
-    @apply relative size-5 max-xl:w-full max-xl:flex max-xl:justify-center max-xl:items-center;
+    @apply relative size-5 max-xl:w-full max-xl:flex max-xl:justify-center max-xl:items-center p-[5px] box-content bg-red-200 rounded hover:bg-red-400 transition-all;
   }
 
   /* Sidebar */
